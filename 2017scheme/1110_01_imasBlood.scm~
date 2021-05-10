@@ -1,0 +1,11 @@
+(define imasBlood
+  (lambda (data blood)
+    (cond ((null? data) '())
+          ((eq? (getblood (car data)) blood)
+           (+ 1 (imasBlood (cdr data))))
+          (else (imasBlood (cdr data))))))
+
+
+(define getblood
+  (lambda (x)
+    (car (cdr (cdr (cdr (cdr (cdr (cdr (cdr (cdr x)))))))))))

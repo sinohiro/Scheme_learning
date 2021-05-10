@@ -1,0 +1,23 @@
+(define honya
+  (lambda (n)
+    (if (= n 1) 5
+        (+ 3 (honya (- n 1))))))
+
+
+(define tosa-10-3
+  (lambda (n)
+    (if (= n 1) 10
+        (+ 3 (tosa-10-3 (- n 1))))))
+
+(define print-tosa-10-3
+  (lambda (n)
+    (cond ((= n 1) 10)
+          (else (+ 3 (print-tosa-10-3 (- n 1))))
+          )))
+
+
+(define tosa-1000--9
+  (lambda (n)
+    (cond ((= n 1) 1000)
+          (else (- 9 (tosa-1000--9 (+ n 1))))
+          )))

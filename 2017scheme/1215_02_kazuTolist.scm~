@@ -1,0 +1,9 @@
+(define myapend
+  (lambda (a b)
+    (cond ((eq? a '()) b)
+          (else (cons (car a) (myapend (cdr a) b))))))
+
+(define kazuList
+  (lambda (n)
+    (cond ((> 10 (remainder n 10)) (cons n ()))
+          (else (myapend (cons modulo n 10) (kasuList n))))))

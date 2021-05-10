@@ -1,0 +1,4 @@
+(define myiota
+  (lambda (n)
+    (cond ((= n 0) '())
+          (else (cons n (myiota (- n 1)))))))
