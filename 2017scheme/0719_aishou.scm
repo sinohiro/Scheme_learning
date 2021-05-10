@@ -1,0 +1,73 @@
+#!/usr/local/bin/gosh
+
+(define seiza
+  (lambda (x y)
+    (cond ((or (and (= x 3) (>= y 21)) (and (= x 4) (<= y 20))) 'aries)
+          ((or (and (= x 4) (>= y 21)) (and (= x 5) (<= y 21))) 'taurus)
+          ((or (and (= x 5) (>= y 22)) (and (= x 6) (<= y 21))) 'gemini)
+          ((or (and (= x 6) (>= y 22)) (and (= x 7) (<= y 22))) 'cancer)
+          ((or (and (= x 7) (>= y 23)) (and (= x 8) (<= y 23))) 'leo)
+          ((or (and (= x 8) (>= y 24)) (and (= x 9) (<= y 23))) 'virgo)
+          ((or (and (= x 9) (>= y 24)) (and (= x 10) (<= y 23))) 'libra)
+          ((or (and (= x 10) (>= y 24)) (and (= x 11) (<= y 22))) 'scorpio)
+          ((or (and (= x 11) (>= y 23)) (and (= x 12) (<= y 22))) 'sagittarius)
+          ((or (and (= x 12) (>= y 23)) (and (= x 1) (<= y 20))) 'capricorn)
+          ((or (and (= x 1) (>= y 21)) (and (= x 2) (<= y 19))) 'aquarius)
+          ((or (and (= x 2) (>= y 20)) (and (= x 3) (<= y 20))) 'pisces)
+          (else 'errer)
+          )))
+
+(define	zokusei
+  (lambda (x y)
+    (cond ((or (eq? (seiza x y) 'aries) (eq? (seiza x y) 'leo) (eq? (seiza x y) 'sagittarius)) 'flame)
+          ((or (eq? (seiza x y) 'cancer) (eq? (seiza x y) 'scorpio) (eq? (seiza x y) 'pisces)) 'aqua)
+          ((or (eq? (seiza x y) 'gemini) (eq? (seiza x y) 'aquarius) (eq? (seiza x y) 'libra)) 'wind)
+          ((or (eq? (seiza x y) 'taurus) (eq? (seiza x y) 'virgo) (eq? (seiza x y) 'capricorn)) 'earth)
+          (else 'error)
+          )))
+
+
+(define aishou
+  (lambda (x y p q)
+    (cond ((and (eq? (zokusei x y) 'flame) (eq? (zokusei p q) 'flame)) 'A)
+          ((and (eq? (zokusei x y) 'flame) (eq? (zokusei p q) 'aqua)) 'C)
+          ((and (eq? (zokusei x y) 'flame) (eq? (zokusei p q) 'wind)) 'B)
+          ((and (eq? (zokusei x y) 'flame) (eq? (zokusei p q) 'earth)) 'D)
+          ((and (eq? (zokusei x y) 'aqua) (eq? (zokusei p q) 'flame)) 'C)
+          ((and (eq? (zokusei x y) 'aqua) (eq? (zokusei p q) 'aqua)) 'A)
+          ((and (eq? (zokusei x y) 'aqua) (eq? (zokusei p q) 'wind)) 'D)
+          ((and (eq? (zokusei x y) 'aqua) (eq? (zokusei p q) 'earth)) 'B)
+          ((and (eq? (zokusei x y) 'wind) (eq? (zokusei p q) 'flame)) 'B)
+          ((and (eq? (zokusei x y) 'wind) (eq? (zokusei p q) 'aqua)) 'D)
+          ((and (eq? (zokusei x y) 'wind) (eq? (zokusei p q) 'wind)) 'A)
+          ((and (eq? (zokusei x y) 'wind) (eq? (zokusei p q) 'earth)) 'C)
+          ((and (eq? (zokusei x y) 'earth) (eq? (zokusei p q) 'flame)) 'D)
+          ((and (eq? (zokusei x y) 'earth) (eq? (zokusei p q) 'aqua)) 'B)
+          ((and (eq? (zokusei x y) 'earth) (eq? (zokusei p q) 'wind)) 'C)
+          ((and (eq? (zokusei x y) 'earth) (eq? (zokusei p q) 'earth)) 'A)
+          (else 'error)
+          )))
+
+(define henkan
+ (lambda (x y p q)
+  (cond ((eq? (aishou x y p q) 'A) '良スギィー)
+        ((eq? (aishou x y p q) 'B) 'ああいっすね)
+        ((eq? (aishou x y p q) 'C) 'ダメみたいですね)
+        ((eq? (aishou x y p q) 'D) '悪スギィー))))
+
+(define p "")
+(define q "")
+
+(define main (lambda (argv)
+	(let ((x (string->number (cadr argv)))
+      	      (y (string->number (caddr argv))))
+	 (print "あなたの星座は"(seiza x y)" です")
+	 (print "星座の属性は"(zokusei x y)" です")
+         (display "誰かの生まれた月を入力してどうぞ:")(flush)
+         (set! p (read))
+	 (display "誰かの生まれた日を入力してどうぞ:")(flush)
+	 (set! q (read))
+         (print "誰かの星座は "(seiza p q)" です")
+	 (print "星座の属性は"(zokusei p q)" です")
+	 (print "二人の相性は"(henkan x y p q)" です"))))
+

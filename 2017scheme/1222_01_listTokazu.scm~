@@ -1,0 +1,9 @@
+(define listKazu
+  (lambda (n)
+    (cond ((eq? (cdr n) ()) (car n))
+          (else (+ (car (reverse n)) (listKazusub (cdr n) (expt 10 (+ 1 1))))))))
+
+
+(define listKazusub
+  (lambda (n m)
+    (* (car n) m)))

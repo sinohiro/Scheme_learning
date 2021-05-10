@@ -1,0 +1,3 @@
+(define goukeiwa
+  (lambda (x)
+    (if (<= 0 9) x (goukeiwa (quotient x 10)))))
